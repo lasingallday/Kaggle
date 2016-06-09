@@ -12,3 +12,6 @@ mk_cols = train.iloc[:,79:127]
 mk_sum = mk_cols.sum(axis=0)
 mk_cols = mk_cols.append(mk_result, ignore_index=True)
 
+for column in train:
+	if (column == "Product_Info_2"):
+
