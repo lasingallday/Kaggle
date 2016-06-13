@@ -29,7 +29,6 @@ print(y.shape)
 #print(np.any(np.isnan(X)))
 X = X.fillna(1e6).astype(np.float32)
 y = y.fillna(1e6).astype(np.float32)
-#Replace only columns with NaN's
 #bad_flats = X.select_dtypes(include=['float64'])
 #X = X.replace(bad_flats.astype('float32'))
 print(X.dtypes)
