@@ -21,7 +21,7 @@ def visualize_tree(tree, feature_names):
         exit("Could not run dot, ie graphviz, to "
              "produce visualization")
 
-train = pd.read_csv("C:/Users/jeffrey.thomas/workspace/Prudential_LI/train.csv")
+train = pd.read_csv("/home/jeff/Documents/workspace/Prudential_LI/train.csv")
 dt = DecisionTreeClassifier()
 
 #mk_cols = train.loc[:, ["Medical_Keyword_"+str(i) for i in range(1,49)]]
@@ -39,7 +39,7 @@ X = train.drop(['Response'], axis=1)
 y = train['Response']
 X_list = list(X.columns[:])
 #print(y)
-#Indicate if NaN's part of features dataframe
+#Indicate if NaN's are part of features dataframe
 #print(np.any(np.isnan(X)))
 X = X.fillna(1e6).astype(np.float32)
 y = y.fillna(1e6).astype(np.float32)
@@ -48,4 +48,8 @@ y = y.fillna(1e6).astype(np.float32)
 #X = X.replace(bad_flats.astype('float32'))
 #print(X.dtypes)
 dt.fit(X,y)
-visualize_tree(dt, X_list)
+print(y.iloc[[2]])
+print(dt.predict(X.iloc[[2]]))
+#Create svg of decision tree
+#visualize_tree(dt, X_list)
+
