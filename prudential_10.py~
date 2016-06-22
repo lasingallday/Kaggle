@@ -50,5 +50,6 @@ y = y.fillna(1e6).astype(np.float32)
 dt.fit(X,y)
 print(y.iloc[[2]])
 print(dt.predict(X.iloc[[2]]))
+#Create svg of decision tree
 #visualize_tree(dt, X_list)
 
