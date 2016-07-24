@@ -22,8 +22,8 @@ print(user_data.head())
 X = user_data.drop(['country_destination'], axis=1)
 y = user_data['country_destination']
 
-lin_clf.fit(X,y)
-print(lin_clf.coef_)
+#lin_clf.fit(X,y)
+#print(lin_clf.coef_)
 
 #plt.figure(figsize=(6,5))
 #plt.title("Weights of the model")
