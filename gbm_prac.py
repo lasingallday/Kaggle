@@ -36,7 +36,7 @@ def modelfit(alg, dtrain, predictors, performCV=True, printFeatureImportance=Tru
         feat_imp.plot(kind='bar', title='Feature Importances')
         plt.ylabel('Feature Importance Score')
 
-user_data = pd.read_csv('/home/jeff/Documents/repos/Kaggle/Dataset/train_modified.csv')
+user_data = pd.read_csv('C:/Repos/Kaggle/Dataset/train_modified.csv')
 user_data = user_data.dropna()
 target = 'Disbursed'
 IDcol = 'ID'
@@ -45,9 +45,6 @@ IDcol = 'ID'
 predictors = [x for x in user_data.columns if x not in [target, IDcol]]
 gbm0 = GradientBoostingClassifier(random_state=10)
 
-#lb = LabelEncoder()
-#y = lb.fit_transform(predictors)
-
 for column in user_data:
 	user_data_unique = user_data[column].unique()
 	D = dict([(j,i) for i,j in enumerate(user_data_unique)])
@@ -55,8 +52,8 @@ for column in user_data:
 
 modelfit(gbm0, user_data, predictors)
 param_test1 = {'n_estimators':range(20,81,10)}
-gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, min_samples_split=500,min_samples_leaf=50,max_depth=8,max_features='sqrt',subsample=0.8,random_state=10), 
-param_grid = param_test1, scoring='roc_auc',n_jobs=4,iid=False, cv=5)
-gsearch1.fit(user_data[predictors],user_data[target])
-gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_
-
+if __name__ == '__main__':
+	gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, min_samples_split=500,min_samples_leaf=50,max_depth=8,max_features='sqrt',subsample=0.8,random_state=10), 
+	param_grid = param_test1, scoring='roc_auc',n_jobs=4,iid=False, cv=5)
+	gsearch1.fit(user_data[predictors],user_data[target])
+	gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_
