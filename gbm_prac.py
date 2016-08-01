@@ -51,9 +51,24 @@ for column in user_data:
 	user_data[column] = user_data[column].map(D)
 
 modelfit(gbm0, user_data, predictors)
+'''
 param_test1 = {'n_estimators':range(20,81,10)}
 if __name__ == '__main__':
 	gsearch1 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, min_samples_split=500,min_samples_leaf=50,max_depth=8,max_features='sqrt',subsample=0.8,random_state=10), 
 	param_grid = param_test1, scoring='roc_auc',n_jobs=4,iid=False, cv=5)
 	gsearch1.fit(user_data[predictors],user_data[target])
-	gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_
+	print(gsearch1.grid_scores_, gsearch1.best_params_, gsearch1.best_score_)
+param_test2 = {'max_depth':range(5,16,2), 'min_samples_split':range(200,1001,200)}
+if __name__ == '__main__':
+	gsearch2 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=80, max_features='sqrt', subsample=0.8, random_state=10), 
+	param_grid = param_test2, scoring='roc_auc',n_jobs=4,iid=False, cv=5)
+	gsearch2.fit(user_data[predictors],user_data[target])
+	print(gsearch2.grid_scores_, gsearch2.best_params_, gsearch2.best_score_)
+'''
+param_test3 = {'min_samples_split':range(1000,2100,200), 'min_samples_leaf':range(30,71,10)}
+if __name__ == '__main__':
+	gsearch3 = GridSearchCV(estimator = GradientBoostingClassifier(learning_rate=0.1, n_estimators=80,max_depth=13,max_features='sqrt', subsample=0.8, random_state=10), 
+	param_grid = param_test3, scoring='roc_auc',n_jobs=4,iid=False, cv=5)
+	gsearch3.fit(user_data[predictors],user_data[target])
+	print(gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_)
+	importances = gsearch3.feature_importances_
