@@ -35,8 +35,9 @@ def modelfit(alg, dtrain, predictors, performCV=True, printFeatureImportance=Tru
         feat_imp = pd.Series(alg.feature_importances_, predictors).sort_values(ascending=False)
         feat_imp.plot(kind='bar', title='Feature Importances')
         plt.ylabel('Feature Importance Score')
+	plt.show()
 
-user_data = pd.read_csv('C:/Repos/Kaggle/Dataset/train_modified.csv')
+user_data = pd.read_csv('/home/jeff/Documents/repos/Kaggle/Dataset/train_modified.csv')
 user_data = user_data.dropna()
 target = 'Disbursed'
 IDcol = 'ID'
@@ -71,4 +72,5 @@ if __name__ == '__main__':
 	param_grid = param_test3, scoring='roc_auc',n_jobs=4,iid=False, cv=5)
 	gsearch3.fit(user_data[predictors],user_data[target])
 	print(gsearch3.grid_scores_, gsearch3.best_params_, gsearch3.best_score_)
-	importances = gsearch3.feature_importances_
+	modelfit(gsearch3.best_estimator_, user_data, predictors)
+
