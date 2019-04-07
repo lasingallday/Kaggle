@@ -52,16 +52,15 @@ for i in cat:
 
 ############################################### loss Exploration ##################################################
 ###################################################################################################################
-num_bins=20
+num_bins=50
 n, bins, patches = plt.hist(loss, num_bins, facecolor='blue', alpha=0.5)
+
+plt.show()
 
 log_loss=np.log(loss)
 n, bins, patches = plt.hist(np.log(loss), num_bins, facecolor='blue', alpha=0.5)
 #Perhaps log of the y variable may be a good idea... could improve predicitona accuracy
 
-plt.figure()
-# plt.plot(loss)
-plt.plot(log_loss)
 plt.show()
 ###################################################################################################################
 ###################################################################################################################
