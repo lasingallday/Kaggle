@@ -57,7 +57,12 @@ n, bins, patches = plt.hist(loss, num_bins, facecolor='blue', alpha=0.5)
 
 log_loss=np.log(loss)
 n, bins, patches = plt.hist(np.log(loss), num_bins, facecolor='blue', alpha=0.5)
-#Perhaps log of the y variable may be a good idea... could improve predicitona ccuracy
+#Perhaps log of the y variable may be a good idea... could improve predicitona accuracy
+
+plt.figure()
+# plt.plot(loss)
+plt.plot(log_loss)
+plt.show()
 ###################################################################################################################
 ###################################################################################################################
 
@@ -75,9 +80,11 @@ n, bins, patches = plt.hist(np.log(loss), num_bins, facecolor='blue', alpha=0.5)
 # for col in cat: #looks at level distribution
 #     plt.figure()
 #     sns.countplot(x=col, data=cat)
-plt.figure()
-sns.countplot(x='cat116', data=cat)
-plt.show()
+
+# Plot only one categorical variable distribution
+# plt.figure()
+# sns.countplot(x='cat116', data=cat)
+# plt.show()
 
 ###################################################################################################################
 ###################################################################################################################
