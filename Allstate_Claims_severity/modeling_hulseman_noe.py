@@ -14,7 +14,7 @@ from xgboost import XGBRegressor
 # @Allstate Kaggle    #
 #######################
 
-allstate = pd.read_csv('C:\\Users\\nedhu\\Desktop\\nedhulseman.com\\allstate\\train.csv')
+allstate = pd.read_csv('/Users/jif/All_State_Claim_severity/train.csv')
 
 ############################################ Initial Exploration ##################################################
 ###################################################################################################################
@@ -33,8 +33,8 @@ for col in allstate:
 ##################################
 # dives variables into 3 sets    #
 # loss/log_loss                  #
-# categorical @cat               #
-# continuous @cont               #
+# categorical variable = "cat"   #
+# continuous variable = "cont"   #
 ##################################
 loss=allstate['loss']
 log_loss=np.log(loss)
@@ -67,6 +67,9 @@ n, bins, patches = plt.hist(np.log(loss), num_bins, facecolor='blue', alpha=0.5)
 ############################################### Cat exploration ###################################################
 ###################################################################################################################
 
+# plt.figure()
+# sns.countplot(x = ['A' 'B' 'C'], data = cat)
+
 for col in cat:
     print(cat[col].unique())
 #cat 75 is last  2-level cat
@@ -92,59 +95,59 @@ for col in cont:
 ###################################################################################################################
 
 
-cat=cat.values #changes type to a numpy.ndarray for ease of use
-cont=cont.values #changes type to a numpy.ndarray
-
-
-#################################################################################
-# formats the categorical variables in a way so that it can be input into xgboost
-# the label encoder changes the strings inputs to numbers
-
-encoded_cat=None
-for i in range(0, cat.shape[1]):
-    label_encoder = LabelEncoder()#instantiates labelEncoder
-    feature=label_encoder.fit_transform(cat[:, i]) #changes strings to numbers
-    feature=feature.reshape(cat.shape[0], 1) #reshape from (0,5) to ()
-    onehot_encoder=OneHotEncoder(sparse=False) #instantiates onehotencoder
-    feature=onehot_encoder.fit_transform(feature) #turns levels to columns
-    if encoded_cat==None:
-        encoded_cat=feature
-    else:
-        encoded_cat=np.concatenate((encoded_cat, feature), axis=1)
-
-X=np.concatenate((encoded_cat, cont), axis=1)
-
-
-
-seed=3
-test_size=.3
-
-X_train, X_test, y_train, y_test = train_test_split(X, log_loss, test_size=test_size, random_state=seed)
-
-
-model=XGBRegressor(learning_rate=0.08,
-                   max_depth=10,
-                   objective='reg:linear',
-                   nthread=3,
-                   gamma=0.2,
-                   subsample=0.9,
-                   n_estimators=100,
-                   )
-model.fit(X_train, y_train)
-print(model)
-y_pred=model.predict(X_test)
-
-def mae(predicted, actual, logscale=False):
-    if logscale == True:
-        predexp=np.exp(predicted)
-        actualexp=np.exp(actual)
-        return np.mean(np.abs(predexp - actualexp))
-    else:
-        return np.mean(np.abs(predicted - actual))
-
-print(mae(y_pred, y_test, True))
-
-
-#Plotting Variable Importance
-plt.bar(range(len(model.feature_importances_)), model.feature_importances_)
-plt.title('Variable Importance')
+# cat=cat.values #changes type to a numpy.ndarray for ease of use
+# cont=cont.values #changes type to a numpy.ndarray
+#
+#
+# #################################################################################
+# # formats the categorical variables in a way so that it can be input into xgboost
+# # the label encoder changes the strings inputs to numbers
+#
+# encoded_cat=None
+# for i in range(0, cat.shape[1]):
+#     label_encoder = LabelEncoder()#instantiates labelEncoder
+#     feature=label_encoder.fit_transform(cat[:, i]) #changes strings to numbers
+#     feature=feature.reshape(cat.shape[0], 1) #reshape from (0,5) to ()
+#     onehot_encoder=OneHotEncoder(sparse=False) #instantiates onehotencoder
+#     feature=onehot_encoder.fit_transform(feature) #turns levels to columns
+#     if encoded_cat==None:
+#         encoded_cat=feature
+#     else:
+#         encoded_cat=np.concatenate((encoded_cat, feature), axis=1)
+#
+# X=np.concatenate((encoded_cat, cont), axis=1)
+#
+#
+#
+# seed=3
+# test_size=.3
+#
+# X_train, X_test, y_train, y_test = train_test_split(X, log_loss, test_size=test_size, random_state=seed)
+#
+#
+# model=XGBRegressor(learning_rate=0.08,
+#                    max_depth=10,
+#                    objective='reg:linear',
+#                    nthread=3,
+#                    gamma=0.2,
+#                    subsample=0.9,
+#                    n_estimators=100,
+#                    )
+# model.fit(X_train, y_train)
+# print(model)
+# y_pred=model.predict(X_test)
+#
+# def mae(predicted, actual, logscale=False):
+#     if logscale == True:
+#         predexp=np.exp(predicted)
+#         actualexp=np.exp(actual)
+#         return np.mean(np.abs(predexp - actualexp))
+#     else:
+#         return np.mean(np.abs(predicted - actual))
+#
+# print(mae(y_pred, y_test, True))
+#
+#
+# #Plotting Variable Importance
+# plt.bar(range(len(model.feature_importances_)), model.feature_importances_)
+# plt.title('Variable Importance')
