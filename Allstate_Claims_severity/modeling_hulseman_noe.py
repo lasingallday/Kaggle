@@ -67,28 +67,27 @@ n, bins, patches = plt.hist(np.log(loss), num_bins, facecolor='blue', alpha=0.5)
 ############################################### Cat exploration ###################################################
 ###################################################################################################################
 
-# plt.figure()
-# sns.countplot(x = ['A' 'B' 'C'], data = cat)
-
-for col in cat:
-    print(cat[col].unique())
+# for col in cat:
+#     print(cat[col].unique())
 #cat 75 is last  2-level cat
 
 
-for col in cat: #looks at level distribution
-    plt.figure()
-    sns.countplot(x=col, data=cat)
-
+# for col in cat: #looks at level distribution
+#     plt.figure()
+#     sns.countplot(x=col, data=cat)
+plt.figure()
+sns.countplot(x='cat116', data=cat)
+plt.show()
 
 ###################################################################################################################
 ###################################################################################################################
 
 ############################################### cont exploration ###################################################
 ###################################################################################################################
-for col in cont:
-    n, bins, patches = plt.hist(allstate[col])
-    plt.title(col)
-    plt.show()
+# for col in cont:
+#     n, bins, patches = plt.hist(allstate[col])
+#     plt.title(col)
+#     plt.show()
 
 
 ###################################################################################################################
