@@ -16,12 +16,12 @@ from xgboost import XGBRegressor
 
 allstate = pd.read_csv('/Users/jif/All_State_Claim_severity/train.csv')
 
-############################################ Initial Exploration ##################################################
-###################################################################################################################
-print(allstate.shape) #188318, 132
-print(list(allstate))
-for col in allstate:
-    print(allstate[col].dtype)
+# ############################################ Initial Exploration ##################################################
+# ###################################################################################################################
+# print(allstate.shape) #188318, 132
+# print(list(allstate))
+# for col in allstate:
+#     print(allstate[col].dtype)
 # @col 0: id variable
 # @col 1:116 cat1:cat116
 # @ col 117:130 cont1:cont14
@@ -55,13 +55,13 @@ for i in cat:
 num_bins=50
 n, bins, patches = plt.hist(loss, num_bins, facecolor='blue', alpha=0.5)
 
-plt.show()
+# plt.show()
 
 log_loss=np.log(loss)
 n, bins, patches = plt.hist(np.log(loss), num_bins, facecolor='blue', alpha=0.5)
 #Perhaps log of the y variable may be a good idea... could improve predicitona accuracy
 
-plt.show()
+# plt.show()
 ###################################################################################################################
 ###################################################################################################################
 
@@ -81,9 +81,9 @@ plt.show()
 #     sns.countplot(x=col, data=cat)
 
 # Plot only one categorical variable distribution
-# plt.figure()
-# sns.countplot(x='cat116', data=cat)
-# plt.show()
+plt.figure()
+sns.countplot(x='cat116', data=cat)
+plt.show()
 
 ###################################################################################################################
 ###################################################################################################################
@@ -100,36 +100,36 @@ plt.show()
 ###################################################################################################################
 
 
-# cat=cat.values #changes type to a numpy.ndarray for ease of use
-# cont=cont.values #changes type to a numpy.ndarray
-#
-#
-# #################################################################################
-# # formats the categorical variables in a way so that it can be input into xgboost
-# # the label encoder changes the strings inputs to numbers
-#
-# encoded_cat=None
-# for i in range(0, cat.shape[1]):
-#     label_encoder = LabelEncoder()#instantiates labelEncoder
-#     feature=label_encoder.fit_transform(cat[:, i]) #changes strings to numbers
-#     feature=feature.reshape(cat.shape[0], 1) #reshape from (0,5) to ()
-#     onehot_encoder=OneHotEncoder(sparse=False) #instantiates onehotencoder
-#     feature=onehot_encoder.fit_transform(feature) #turns levels to columns
-#     if encoded_cat==None:
-#         encoded_cat=feature
-#     else:
-#         encoded_cat=np.concatenate((encoded_cat, feature), axis=1)
-#
-# X=np.concatenate((encoded_cat, cont), axis=1)
-#
-#
-#
-# seed=3
-# test_size=.3
-#
-# X_train, X_test, y_train, y_test = train_test_split(X, log_loss, test_size=test_size, random_state=seed)
-#
-#
+cat=cat.values #changes type to a numpy.ndarray for ease of use
+cont=cont.values #changes type to a numpy.ndarray
+
+
+#################################################################################
+# formats the categorical variables in a way so that it can be input into xgboost
+# the label encoder changes the strings inputs to numbers
+
+encoded_cat=None
+for i in range(0, cat.shape[1]):
+    label_encoder = LabelEncoder()#instantiates labelEncoder
+    feature=label_encoder.fit_transform(cat[:, i]) #changes strings to numbers
+    feature=feature.reshape(cat.shape[0], 1) #reshape from (0,5) to ()
+    onehot_encoder=OneHotEncoder(sparse=False) #instantiates onehotencoder
+    feature=onehot_encoder.fit_transform(feature) #turns levels to columns
+    if encoded_cat==None:
+        encoded_cat=feature
+    else:
+        encoded_cat=np.concatenate((encoded_cat, feature), axis=1)
+
+X=np.concatenate((encoded_cat, cont), axis=1)
+
+
+
+seed=3
+test_size=.3
+
+X_train, X_test, y_train, y_test = train_test_split(X, log_loss, test_size=test_size, random_state=seed)
+
+
 # model=XGBRegressor(learning_rate=0.08,
 #                    max_depth=10,
 #                    objective='reg:linear',
